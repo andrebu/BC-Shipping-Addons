@@ -1,16 +1,27 @@
 <script type="text/javascript">
 //<![CDATA[
     //Add Shipping Addon buttons
-    function addDelSigToCart() {
+	function addDelSigToCart() {
 	    if (!$('#delSigCheck').hasClass('checked')) {
 		    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
 		    	newFormSub = 'newChooseShippingProvider(); return false;';
 		    chooseShipperForm.attr('onsubmit', newFormSub);
 		    $('#delSigCheck').addClass('checked');
 	    } else {return;}
-		//n == 0 ? chooseShipperForm.attr('onsubmit', newFormSub) : console.log('not again');
-    }
-    function newChooseShippingProvider() {
+	}
+	function addInsToCart() {
+	    var insTotal = $('.ins-total');
+	    var insID;
+	    $('.shipping-addons').append('<div class="mtotal" style="display: none;"></div>');
+	    $('.mtotal').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice');
+	    setTimeout(function(){ 
+	        var insuranceCost = parseFloat($('.mtotal .ProductPrice').text().replace('$','')) * 0.01;
+	        insTotal.html(insuranceCost);
+	        console.log('insurance cost is ' + insuranceCost)
+	    },1000);
+	    $.post('/cart.php?action=add&product_id=' + insID);
+	}
+	function newChooseShippingProvider() {
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 	        $.post('/cart.php?action=add&product_id=690&ajaxsubmit=1');
 		    setTimeout(function() {
@@ -19,23 +30,9 @@
 	    } else {
 		    ExpressCheckout.ChooseShippingProvider();
 	    }
-    }
-    function shippingAddons() {
-        var insTotal = $('.ins-total');
-        var insID;
-        $('.shipping-addons').append('<div class="mtotal" style="display: none;"></div>');
-        $('.mtotal').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice');
-        setTimeout(function(){ 
-            var insuranceCost = parseFloat($('.mtotal .ProductPrice').text().replace('$','')) * 0.01;
-            insTotal.html(insuranceCost);
-            console.log('insurance cost is ' + insuranceCost)
-        },1000);
-        function addInsToCart() {
-            $.post('/cart.php?action=add&product_id=' + insID);
-        }
-    }
+	}
     $(document).ready(function(){
-        shippingAddons();
+        //shippingAddons();
     });
 //]]>
 </script>
