@@ -2,13 +2,21 @@
 //<![CDATA[
     //Add Shipping Addon buttons
     function addDelSigToCart() {
-	    $(this).on('click', function() {
-		    $(this).parents('form').attr('onsubmit', 'newChooseShippingProvider();')
-	    });
+	    var n;
+	    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
+	    	newFormSub = 'newChooseShippingProvider(); return false;';
+	    n > 0 ? chooseShipperForm.attr('onsubmit', newFormSub) : return false;
+	    n++;
     }
     function newChooseShippingProvider() {
-        $.post('/cart.php?action=add&product_id=690&ajaxsubmit=1');
-	    ExpressCheckout.ChooseShippingProvider(); return false;
+	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
+	        $.post('/cart.php?action=add&product_id=690&ajaxsubmit=1');
+		    setTimeout(function() {
+			    ExpressCheckout.ChooseShippingProvider();
+			}, 1000);
+	    } else {
+		    ExpressCheckout.ChooseShippingProvider();
+	    }
     }
     function shippingAddons() {
         var insTotal = $('.ins-total');
