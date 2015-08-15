@@ -2,55 +2,67 @@
 //<![CDATA[
     //Add Shipping Addon buttons
 	function addDelSigToCart() {
-	    if (!$('#delSigCheck').hasClass('checked')) {
-		    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
-		    	newFormSub = 'newChooseShippingProvider(); return false;';
-		    chooseShipperForm.attr('onsubmit', newFormSub);
-		    $('#delSigCheck').addClass('checked');
-	    } else {return;}
+		$('.del-sig-text').on('click', function () {
+		    if (!$('#delSigCheck').hasClass('initialized')) {
+			    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
+			    	newFormSub = 'newChooseShippingProvider(); return false;';
+			    chooseShipperForm.attr('onsubmit', newFormSub);
+			    $('#delSigCheck').addClass('initialized');
+			    $('#delSigCheck').toggleClass('checked');
+		    } else {		    
+			    $('#delSigCheck').toggleClass('checked');
+			}
+	    });
 	}
-	function calcIns() {
-	    var insDesc = $('.ins-cost'),
-	    	clickCalc = $('.del-sig-calc'),
-	    	newInsDesc = '<label for="addInsCheck" class="del-sig-text"><input id="addInsCheck" type="checkbox" onClick="addInsToCart();" class="btn Small" title="Add Delivery Signature"><strong class="green">Add Shipping Insurance</strong> --- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>.</label>',
+	function addInsToCart() {
+	    var insDesc = $('.ins-text'),
+	    	clickCalc = $('.ins-add-calc'),
+	    	newInsText = '--- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
 	    	insTotalText = $('#ins-total'),
 	    	insTotal,
 			insId;
 		clickCalc.on('click', function() {
-			insDesc.html(newInsDesc);
-		    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
-				$('#purch-total').html($(this).text());
-			});
-		    setTimeout(function(){ 
-				var insIdObj = ['691','692','693','694','695','696','697','698','699','700'];
-				var insTotal = parseFloat($('#purch-total').text().replace('$',''));
-				var insIdSelector = Math.floor(insTotal * 0.01);
-				var insId = insIdObj[insIdSelector];
-				$('#addInsCheck').attr('data-ins-id', insId)
-				//insTotalText.html(insuranceCost);
-		    },1000);
+			if (!$('#addInsCheck').attr('data-ins-id')) {
+				insDesc.html(newInsText);
+				$('#addInsCheck').attr('onClick', 'addInsToCart();');
+			    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
+					$('#purch-total').html($(this).text());
+				});
+			    $('#addInsCheck').addClass('checked');
+			    setTimeout(function(){ 
+					var insIdObj = ['691','692','693','694','695','696','697','698','699','700'];
+					var insTotal = parseFloat($('#purch-total').text().replace('$',''));
+					var insIdSelector = Math.floor(insTotal * 0.01);
+					var insId = insIdObj[insIdSelector];
+					$('#addInsCheck').attr('data-ins-id', insId)
+					//insTotalText.html(insuranceCost);
+			    },1000);
+			} else {
+			    $('#addInsCheck').toggleClass('checked');
+			}
 		});
-	}
-	function addInsToCart() {
-		$('#addInsCheck').addClass('checked');
 	}
 	function newChooseShippingProvider() {
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
-			if ($('#addInsCheck').hasClass('checked') && $('#delSigCheck').hasClass('checked')) {
+			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
+				console.log('BOTH');
 			    var insId = $('#addInsCheck').attr('data-ins-id');
 		        $.post('/cart.php?action=add&product_id=690');
 			    $.post('/cart.php?action=add&product_id=' + insId);
 			    setTimeout(function() {
 				    ExpressCheckout.ChooseShippingProvider();
 				}, 1000);
-			} else if (!$('#addInsCheck').hasClass('checked') && !$('#delSigCheck').hasClass('checked')) {
+			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
+				console.log('NEITHER');
 			    ExpressCheckout.ChooseShippingProvider();
-			} else if ($('#addInsCheck').hasClass('checked') && !$('#delSigCheck').hasClass('checked')) {
+			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
+				console.log('signature');
 		        $.post('/cart.php?action=add&product_id=690');
 			    setTimeout(function() {
 				    ExpressCheckout.ChooseShippingProvider();
 				}, 1000);
-			} else if (!$('#addInsCheck').hasClass('checked') && $('#delSigCheck').hasClass('checked')) {
+			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
+				console.log('insurace');
 			    var insId = $('#addInsCheck').attr('data-ins-id');
 			    $.post('/cart.php?action=add&product_id=' + insId);
 			    setTimeout(function() {
