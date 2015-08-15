@@ -1,7 +1,6 @@
 <script type="text/javascript">
 //<![CDATA[
     //Add Shipping Addon buttons
-    var insID;
 	function addDelSigToCart() {
 	    if (!$('#delSigCheck').hasClass('checked')) {
 		    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
@@ -12,25 +11,25 @@
 	}
 	function addInsToCart() {
 	    var insTotalText = $('#ins-total'),
-	    	insTotal;
+	    	insTotal,
+			insId;
 	    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
 			$('#purch-total').html($(this).text());
 		});
 	    setTimeout(function(){ 
-			var insIDObj = ['691','692','693','694','695','696','697','698','699','700'];
-			console.log(insIDObj[0]);
+			var insIdObj = ['691','692','693','694','695','696','697','698','699','700'];
 			var insTotal = parseFloat($('#purch-total').text().replace('$',''));
-	        //insTotalText.html(insuranceCost);
-	        var insIDSelector = Math.floor(insTotal * 0.01);
-	        console.log(insIDSelector);
-	        var insID = insIDObj[insIDSelector];
-	        console.log(insID);
+			var insIdSelector = Math.floor(insTotal * 0.01);
+			var insId = insIdObj[insIdSelector];
+			$('#addInsCheck').attr('data-ins-id', insId)
+			//insTotalText.html(insuranceCost);
 	    },1000);
 	}
 	function newChooseShippingProvider() {
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
-	        $.post('/cart.php?action=add&product_id=690&ajaxsubmit=1');
-		    $.post('/cart.php?action=add&product_id=' + insID);
+		    var insId = $('#addInsCheck').attr('data-ins-id');
+	        $.post('/cart.php?action=add&product_id=690');
+		    $.post('/cart.php?action=add&product_id=' + insId);
 		    setTimeout(function() {
 			    ExpressCheckout.ChooseShippingProvider();
 			}, 1000);
