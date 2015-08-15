@@ -10,12 +10,13 @@
 	    } else {return;}
 	}
 	function calcIns() {
-	    var insDesc = $('.ins-cost');
+	    var insDesc = $('.ins-cost'),
+	    	clickCalc = $('.del-sig-calc'),
 	    	newInsDesc = '<label for="addInsCheck" class="del-sig-text"><input id="addInsCheck" type="checkbox" onClick="addInsToCart();" class="btn Small" title="Add Delivery Signature"><strong class="green">Add Shipping Insurance</strong> --- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>.</label>',
 	    	insTotalText = $('#ins-total'),
 	    	insTotal,
 			insId;
-		insDesc.on('click', function() {
+		clickCalc.on('click', function() {
 			insDesc.html(newInsDesc);
 		    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
 				$('#purch-total').html($(this).text());
