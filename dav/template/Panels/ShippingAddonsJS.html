@@ -2,11 +2,13 @@
 //<![CDATA[
     //Add Shipping Addon buttons
     function addDelSigToCart() {
-	    var n;
-	    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
-	    	newFormSub = 'newChooseShippingProvider(); return false;';
-	    n > 0 ? chooseShipperForm.attr('onsubmit', newFormSub) : return false;
-	    n++;
+	    if (!$('#delSigCheck').hasClass('checked')) {
+		    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
+		    	newFormSub = 'newChooseShippingProvider(); return false;';
+		    chooseShipperForm.attr('onsubmit', newFormSub);
+		    $('#delSigCheck').addClass('checked');
+	    } else {return;}
+		//n == 0 ? chooseShipperForm.attr('onsubmit', newFormSub) : console.log('not again');
     }
     function newChooseShippingProvider() {
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
