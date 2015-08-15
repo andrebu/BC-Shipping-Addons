@@ -1,6 +1,6 @@
 <script type="text/javascript">
 //<![CDATA[
-    //Add Shipping Addon buttons
+    //Add Shipping Addon buttons and click actions
 	function addDelSigToCart() {
 		$('.del-sig-text').on('click', function () {
 		    if (!$('#delSigCheck').hasClass('initialized')) {
@@ -23,8 +23,10 @@
 			insId;
 		clickCalc.on('click', function() {
 			if (!$('#addInsCheck').attr('data-ins-id')) {
+			    var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
+			    	newFormSub = 'newChooseShippingProvider(); return false;';
+			    chooseShipperForm.attr('onsubmit', newFormSub);
 				insDesc.html(newInsText);
-				$('#addInsCheck').attr('onClick', 'addInsToCart();');
 			    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
 					$('#purch-total').html($(this).text());
 				});
