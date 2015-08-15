@@ -63,7 +63,11 @@ and
 
 ##Resources
 - [Conditional (ternary) Operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
-- []()
+- [HTML checkbox onclick called in Javascript](http://stackoverflow.com/questions/3197702/html-checkbox-onclick-called-in-javascript)
+- [jQuery checkbox change and click event](http://stackoverflow.com/questions/7031226/jquery-checkbox-change-and-click-event)
+- [Global variables for cart item quantity and $ value.](http://forum.bigcommerce.com/f5/global-variables-for-cart-item-quantity-and-value--8466/)
+- [Integer division in JavaScript](http://stackoverflow.com/questions/4228356/integer-division-in-javascript)
+- [MC's list of HTML/javascript codes that help you customize/mod your store](http://forum.bigcommerce.com/f4/mc-s-list-of-html-javascript-codes-that-help-you-customize-mod-your-store-23220/)
 - []()
 - []()
 
