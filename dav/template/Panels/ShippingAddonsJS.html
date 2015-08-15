@@ -18,7 +18,6 @@
 	    var insDesc = $('.ins-text'),
 	    	clickCalc = $('.ins-add-calc'),
 	    	newInsText = '--- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
-	    	insTotalText = $('#ins-total'),
 	    	insTotal,
 			insId;
 		clickCalc.on('click', function() {
@@ -32,12 +31,14 @@
 				});
 			    $('#addInsCheck').addClass('checked');
 			    setTimeout(function(){ 
-					var insIdObj = ['691','692','693','694','695','696','697','698','699','700'];
-					var insTotal = parseFloat($('#purch-total').text().replace('$',''));
-					var insIdSelector = Math.floor(insTotal * 0.01);
-					var insId = insIdObj[insIdSelector];
-					$('#addInsCheck').attr('data-ins-id', insId)
-					//insTotalText.html(insuranceCost);
+					var insIdObj = ['691','692','693','694','695','696','697','698','699','700'],
+						orderTotal = parseFloat($('#purch-total').text().replace('$','')),
+						insIdSelector = Math.floor(orderTotal * 0.01),
+						insId = insIdObj[insIdSelector],
+						insCost = insIdSelector + 1,
+						insTotalText = $('#ins-total');
+					$('#addInsCheck').attr('data-ins-id', insId);
+					insTotalText.html(insCost);
 			    },1000);
 			} else {
 			    $('#addInsCheck').toggleClass('checked');
