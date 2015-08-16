@@ -1,5 +1,20 @@
+<style>
+.disabled {
+	pointer-events: none;
+	color: gray !important;
+}
+</style>
 <script type="text/javascript">
 //<![CDATA[
+    //$('label[id^="shippingMethod"]').attr('onclick', 'enableShippingAddons();');
+/*
+	on('click', function() {
+//	if ($('.ShippingProviderList .radio > span.checked')) {
+		console.log("hello!");
+			$('.shipping-addons').removeClass('disabled').attr('data-disabled', 'false');
+//	}
+	});
+*/
     //Add Shipping Addon buttons and click actions
 	function addDelSigToCart() {
 		$('.del-sig-text').on('click', function () {
