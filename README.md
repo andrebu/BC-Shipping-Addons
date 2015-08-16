@@ -68,6 +68,7 @@ and
 - [Integer division in JavaScript](http://stackoverflow.com/questions/4228356/integer-division-in-javascript)
 - [MC's list of HTML/javascript codes that help you customize/mod your store](http://forum.bigcommerce.com/f4/mc-s-list-of-html-javascript-codes-that-help-you-customize-mod-your-store-23220/)
 - [jQuery cookie value is %5Bobject%20Object%5D](http://stackoverflow.com/questions/16355717/jquery-cookie-value-is-5bobject20object5d)
+- [jQuery Cookie path](http://stackoverflow.com/questions/9326620/jquery-cookie-path)
 - []()
 - []()
 - []()
