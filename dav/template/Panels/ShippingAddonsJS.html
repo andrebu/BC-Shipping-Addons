@@ -3,18 +3,17 @@
 	pointer-events: none;
 	color: gray !important;
 }
+.disabled .green {
+	color: gray !important;
+}
 </style>
 <script type="text/javascript">
 //<![CDATA[
-    //$('label[id^="shippingMethod"]').attr('onclick', 'enableShippingAddons();');
-/*
-	on('click', function() {
-//	if ($('.ShippingProviderList .radio > span.checked')) {
-		console.log("hello!");
+	function enableShippingAddons() {
+		if ($('.shipping-addons').attr('data-disabled') == 'true') {
 			$('.shipping-addons').removeClass('disabled').attr('data-disabled', 'false');
-//	}
-	});
-*/
+		}
+	}
     //Add Shipping Addon buttons and click actions
 	function addDelSigToCart() {
 		$('.del-sig-text').on('click', function () {
@@ -32,7 +31,7 @@
 	function addInsToCart() {
 	    var insDesc = $('.ins-text'),
 	    	clickCalc = $('.ins-add-calc'),
-	    	newInsText = '--- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
+	    	newInsText = '-- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
 	    	insTotal,
 			insId;
 		clickCalc.on('click', function() {
@@ -63,24 +62,22 @@
 	function newChooseShippingProvider() {
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-				console.log('BOTH');
 			    var insId = $('#addInsCheck').attr('data-ins-id');
 		        $.post('/cart.php?action=add&product_id=690');
-			    $.post('/cart.php?action=add&product_id=' + insId);
 			    setTimeout(function() {
-				    ExpressCheckout.ChooseShippingProvider();
+				    $.post('/cart.php?action=add&product_id=' + insId);
+				    setTimeout(function() {
+					    ExpressCheckout.ChooseShippingProvider();
+					}, 1000);
 				}, 1000);
 			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-				console.log('NEITHER');
 			    ExpressCheckout.ChooseShippingProvider();
 			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-				console.log('signature');
 		        $.post('/cart.php?action=add&product_id=690');
 			    setTimeout(function() {
 				    ExpressCheckout.ChooseShippingProvider();
 				}, 1000);
 			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-				console.log('insurace');
 			    var insId = $('#addInsCheck').attr('data-ins-id');
 			    $.post('/cart.php?action=add&product_id=' + insId);
 			    setTimeout(function() {
@@ -91,8 +88,5 @@
 		    ExpressCheckout.ChooseShippingProvider();
 	    }
 	}
-    $(document).ready(function(){
-        //shippingAddons();
-    });
 //]]>
 </script>
