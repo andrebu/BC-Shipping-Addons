@@ -3,7 +3,6 @@ BC Shipping Addons
 
 https://store-mixi7d.mybigcommerce.com/cart.php?action=remove&item=55ce8c6feeb1d
 https://store-mixi7d.mybigcommerce.com/cart.php?action=remove&item=55ce8da3ba863
-/cart.php?action=add&amp;product_id=690&amp;ajaxsubmit=1&amp;fastcart=1
 
 ## Installation
 
@@ -68,6 +67,8 @@ and
 - [Global variables for cart item quantity and $ value.](http://forum.bigcommerce.com/f5/global-variables-for-cart-item-quantity-and-value--8466/)
 - [Integer division in JavaScript](http://stackoverflow.com/questions/4228356/integer-division-in-javascript)
 - [MC's list of HTML/javascript codes that help you customize/mod your store](http://forum.bigcommerce.com/f4/mc-s-list-of-html-javascript-codes-that-help-you-customize-mod-your-store-23220/)
+- [jQuery cookie value is %5Bobject%20Object%5D](http://stackoverflow.com/questions/16355717/jquery-cookie-value-is-5bobject20object5d)
+- []()
 - []()
 - []()
 
