@@ -42,9 +42,6 @@
 				insDesc.html(newInsText);
 			    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
 					$('#purch-total').html($(this).text());
-				});
-			    $('#addInsCheck').addClass('checked');
-			    setTimeout(function(){ 
 					var insIdObj = ['691','692','693','694','695','696','697','698','699','700'],
 						orderTotal = parseFloat($('#purch-total').text().replace('$','')),
 						insIdSelector = Math.floor(orderTotal * 0.01),
@@ -53,7 +50,8 @@
 						insTotalText = $('#ins-total');
 					$('#addInsCheck').attr('data-ins-id', insId);
 					insTotalText.html(insCost);
-			    },1000);
+				    $('#addInsCheck').addClass('checked');
+				});
 			} else {
 			    $('#addInsCheck').toggleClass('checked');
 			}
