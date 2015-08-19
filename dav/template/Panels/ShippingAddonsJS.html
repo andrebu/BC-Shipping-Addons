@@ -31,7 +31,7 @@
 	function addInsToCart() {
 	    var insDesc = $('.ins-text'),
 	    	clickCalc = $('.ins-add-calc'),
-	    	newInsText = '-- Insure your full purchase order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
+	    	newInsText = '-- Insure your full order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
 	    	insTotal,
 			insId;
 		clickCalc.on('click', function() {
@@ -40,9 +40,9 @@
 			    	newFormSub = 'newChooseShippingProvider(); return false;';
 			    chooseShipperForm.attr('onsubmit', newFormSub);
 				insDesc.html(newInsText);
-			    $('#purch-total').load('//store-mixi7d.mybigcommerce.com/cart.php .gtotal .ProductPrice', function(){
+			    $('#purch-total').load('/cart.php .gtotal .ProductPrice', function(){
 					$('#purch-total').html($(this).text());
-					var insIdObj = ['691','692','693','694','695','696','697','698','699','700'],
+					var insIdObj = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290','1291','1292','1293','1294','1295','1296','1297','1298','1299','1300'],
 						orderTotal = parseFloat($('#purch-total').text().replace('$','')),
 						insIdSelector = Math.floor(orderTotal * 0.01),
 						insId = insIdObj[insIdSelector],
@@ -61,9 +61,9 @@
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
 			    var insId = $('#addInsCheck').attr('data-ins-id');
-		        $.post('/cart.php?action=add&product_id=690');
+		        $.post('https://dankstop.com/cart.php?action=add&product_id=1280');
 			    setTimeout(function() {
-				    $.post('/cart.php?action=add&product_id=' + insId);
+				    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId);
 				    setTimeout(function() {
 					    ExpressCheckout.ChooseShippingProvider();
 					}, 1000);
@@ -71,13 +71,13 @@
 			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
 			    ExpressCheckout.ChooseShippingProvider();
 			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-		        $.post('/cart.php?action=add&product_id=690');
+		        $.post('https://dankstop.com/cart.php?action=add&product_id=1280');
 			    setTimeout(function() {
 				    ExpressCheckout.ChooseShippingProvider();
 				}, 1000);
 			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
 			    var insId = $('#addInsCheck').attr('data-ins-id');
-			    $.post('/cart.php?action=add&product_id=' + insId);
+			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId);
 			    setTimeout(function() {
 				    ExpressCheckout.ChooseShippingProvider();
 				}, 1000);
