@@ -6,6 +6,33 @@
 .disabled .green {
 	color: gray !important;
 }
+.best-value {
+	margin: 0;
+	padding: 5px 0;
+	background-color: #fafafa;
+	border-radius: 4px;
+}
+.best-value:before {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f164";
+	position: absolute;
+	left: 10px;
+	font-size: 19px;
+	color: #39b54a;
+}
+.best-value label {
+	margin: 0;
+}
+.best-value-text {
+	color:#39b54a;
+	text-transform: uppercase;
+}
+
 </style>
 <script type="text/javascript">
 //<![CDATA[
@@ -31,7 +58,7 @@
 	function addInsToCart() {
 	    var insDesc = $('.ins-text'),
 	    	clickCalc = $('.ins-add-calc'),
-	    	newInsText = '-- Insure your full order of <span id="purch-total"></span> for only $<span id="ins-total"></span>',
+	    	newInsText = '-- Insure your order <span style="display:none;">of <span id="purch-total"></span></span> for only $<span id="ins-total"></span>',
 	    	insTotal,
 			insId;
 		clickCalc.on('click', function() {
@@ -58,6 +85,7 @@
 		});
 	}
 	function newChooseShippingProvider() {
+		//ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
 			    var insId = $('#addInsCheck').attr('data-ins-id');
