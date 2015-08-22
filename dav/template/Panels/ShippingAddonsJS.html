@@ -32,7 +32,9 @@
 	color:#39b54a;
 	text-transform: uppercase;
 }
-
+.ShippingProviderList span.lightgray {
+	font-size: 12px;
+}
 </style>
 <script type="text/javascript">
 //<![CDATA[
@@ -69,27 +71,26 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
+		var originalCheckout = ExpressCheckout.ChooseShippingProvider();
 		//ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
+		    var insId = $('#addInsCheck').attr('data-ins-id');
 			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-			    var insId = $('#addInsCheck').attr('data-ins-id');
-		        $.post('https://dankstop.com/cart.php?action=add&product_id=1280');
-			    setTimeout(function() {
-				    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId);
-				    setTimeout(function() {
-					    ExpressCheckout.ChooseShippingProvider();
-					}, 1000);
-				}, 1000);
+				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
+				    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
+					    originalCheckout;
+					});
+				});
 			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-			    ExpressCheckout.ChooseShippingProvider();
+			    originalCheckout;
 			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-		        $.when($.post('https://dankstop.com/cart.php?action=add&product_id=1280')).then(ExpressCheckout.ChooseShippingProvider());
+				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
+					originalCheckout;
+				});
 			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-			    var insId = $('#addInsCheck').attr('data-ins-id');
-			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId);
-			    setTimeout(function() {
-				    ExpressCheckout.ChooseShippingProvider();
-				}, 1000);
+			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
+				    originalCheckout;
+				});
 			}
 	    } else {
 		    ExpressCheckout.ChooseShippingProvider();
