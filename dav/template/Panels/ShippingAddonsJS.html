@@ -83,10 +83,7 @@
 			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
 			    ExpressCheckout.ChooseShippingProvider();
 			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-		        $.post('https://dankstop.com/cart.php?action=add&product_id=1280');
-			    setTimeout(function() {
-				    ExpressCheckout.ChooseShippingProvider();
-				}, 1000);
+		        $.when($.post('https://dankstop.com/cart.php?action=add&product_id=1280')).then(ExpressCheckout.ChooseShippingProvider());
 			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
 			    var insId = $('#addInsCheck').attr('data-ins-id');
 			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId);
