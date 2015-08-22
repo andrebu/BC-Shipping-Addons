@@ -39,27 +39,27 @@
 	function enableShippingAddons() {
 		if ($('.shipping-addons').attr('data-disabled') == 'true') {
 			$('.shipping-addons').removeClass('disabled').attr('data-disabled', 'false');
+		    var insDesc = $('.ins-text'),
+		    	clickCalc = $('.ins-add-calc'),
+		    	newInsText = ' -- Insure your order <span style="display:none;">of <span id="purch-total"></span></span> for only $<span id="ins-total"><i class="green fa fa-spinner fa-pulse fa-fw"></i></span>',
+		    	insTotal,
+				insId,
+			    chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
+			    newFormSub = 'newChooseShippingProvider(); return false;';
+		    chooseShipperForm.attr('onsubmit', newFormSub);
+			insDesc.html(newInsText);
+		    $('#purch-total').load('/cart.php .gtotal .ProductPrice', function(){
+				$('#purch-total').html($(this).text());
+				var insIdObj = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290','1291','1292','1293','1294','1295','1296','1297','1298','1299','1300'],
+					orderTotal = parseFloat($('#purch-total').text().replace('$','')),
+					insIdSelector = Math.floor(orderTotal * 0.01),
+					insId = insIdObj[insIdSelector],
+					insCost = insIdSelector + 1,
+					insTotalText = $('#ins-total');
+				$('#addInsCheck').attr('data-ins-id', insId);
+				insTotalText.html(insCost);
+			});
 		}
-	    var insDesc = $('.ins-text'),
-	    	clickCalc = $('.ins-add-calc'),
-	    	newInsText = ' -- Insure your order <span style="display:none;">of <span id="purch-total"></span></span> for only $<span id="ins-total"><i class="green fa fa-spinner fa-pulse fa-fw"></i></span>',
-	    	insTotal,
-			insId,
-		    chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
-		    newFormSub = 'newChooseShippingProvider(); return false;';
-	    chooseShipperForm.attr('onsubmit', newFormSub);
-		insDesc.html(newInsText);
-	    $('#purch-total').load('/cart.php .gtotal .ProductPrice', function(){
-			$('#purch-total').html($(this).text());
-			var insIdObj = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290','1291','1292','1293','1294','1295','1296','1297','1298','1299','1300'],
-				orderTotal = parseFloat($('#purch-total').text().replace('$','')),
-				insIdSelector = Math.floor(orderTotal * 0.01),
-				insId = insIdObj[insIdSelector],
-				insCost = insIdSelector + 1,
-				insTotalText = $('#ins-total');
-			$('#addInsCheck').attr('data-ins-id', insId);
-			insTotalText.html(insCost);
-		});
 	}
     //Add Shipping Addon buttons and click actions
 	function addDelSigToCart() {
