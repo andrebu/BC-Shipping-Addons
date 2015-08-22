@@ -74,25 +74,21 @@
 		var originalCheckout = ExpressCheckout.ChooseShippingProvider();
 		//ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
-		    var addInsCheck = $('#addInsCheck').hasClass('checked');
-		    var delSigCheck = $('#delSigCheck').hasClass('checked');
 		    var insId = $('#addInsCheck').attr('data-ins-id');
-		    var addDelSigUrl = 'https://dankstop.com/cart.php?action=add&product_id=1280';
-		    var addInsUrl = 'https://dankstop.com/cart.php?action=add&product_id=' + insId;
-			if (delSigCheck && addInsCheck) {
-				$.post(addDelSigUrl, function() {
-				    $.post(addInsUrl, function() {
+			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
+				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
+				    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
 					    originalCheckout;
 					});
 				});
-			} else if (!delSigCheck && !addInsCheck) {
+			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
 			    originalCheckout;
-			} else if (delSigCheck && !addInsCheck) {
-				$.post(addDelSigUrl, function() {
+			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
+				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
 					originalCheckout;
 				});
-			} else if (!delSigCheck && addInsCheck) {
-			    $.post(addInsUrl, function() {
+			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
+			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
 				    originalCheckout;
 				});
 			}
