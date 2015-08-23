@@ -71,8 +71,6 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
-		//var originalCheckout = ExpressCheckout.ChooseShippingProvider();
-		//ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 		    var addInsCheck = $('#addInsCheck').hasClass('checked');
 		    var delSigCheck = $('#delSigCheck').hasClass('checked');
@@ -83,17 +81,17 @@
 				$.post(addDelSigUrl).then(function(data1) {
 					return $.post(addInsUrl);
 				}).then(function(data2) {
-					return ExpressCheckout.ChooseShippingProvider();
+					return setTimeout(function () {ExpressCheckout.ChooseShippingProvider();}, 13);
 				});
 			} else if (!delSigCheck && !addInsCheck) {
 			    ExpressCheckout.ChooseShippingProvider();
 			} else if (delSigCheck && !addInsCheck) {
-				$.post(addDelSigUrl, function() {
-					ExpressCheckout.ChooseShippingProvider();
+				$.post(addDelSigUrl).then(function(data1) {
+					return ExpressCheckout.ChooseShippingProvider();
 				});
 			} else if (!delSigCheck && addInsCheck) {
-			    $.post(addInsUrl, function() {
-				    ExpressCheckout.ChooseShippingProvider();
+				$.post(addInsUrl).then(function(data1) {
+					return ExpressCheckout.ChooseShippingProvider();
 				});
 			}
 	    } else {
