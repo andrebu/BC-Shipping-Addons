@@ -71,25 +71,29 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
-		var originalCheckout = ExpressCheckout.ChooseShippingProvider();
+		//var originalCheckout = ExpressCheckout.ChooseShippingProvider();
 		//ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
+		    var addInsCheck = $('#addInsCheck').hasClass('checked');
+		    var delSigCheck = $('#delSigCheck').hasClass('checked');
 		    var insId = $('#addInsCheck').attr('data-ins-id');
-			if ($('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
-				    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
-					    originalCheckout;
-					});
+		    var addDelSigUrl = 'https://dankstop.com/cart.php?action=add&product_id=1280';
+		    var addInsUrl = 'https://dankstop.com/cart.php?action=add&product_id=' + insId;
+			if (delSigCheck && addInsCheck) {
+				$.post(addDelSigUrl).then(function(data1) {
+					return $.post(addInsUrl);
+				}).then(function(data2) {
+					return ExpressCheckout.ChooseShippingProvider();
 				});
-			} else if (!$('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-			    originalCheckout;
-			} else if ($('#delSigCheck').hasClass('checked') && !$('#addInsCheck').hasClass('checked')) {
-				$.post('https://dankstop.com/cart.php?action=add&product_id=1280', function() {
-					originalCheckout;
+			} else if (!delSigCheck && !addInsCheck) {
+			    ExpressCheckout.ChooseShippingProvider();
+			} else if (delSigCheck && !addInsCheck) {
+				$.post(addDelSigUrl, function() {
+					ExpressCheckout.ChooseShippingProvider();
 				});
-			} else if (!$('#delSigCheck').hasClass('checked') && $('#addInsCheck').hasClass('checked')) {
-			    $.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function() {
-				    originalCheckout;
+			} else if (!delSigCheck && addInsCheck) {
+			    $.post(addInsUrl, function() {
+				    ExpressCheckout.ChooseShippingProvider();
 				});
 			}
 	    } else {
