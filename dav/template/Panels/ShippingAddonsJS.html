@@ -71,6 +71,7 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
+		ShowLoadingIndicator();
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 		    var addInsCheck = $('#addInsCheck').hasClass('checked');
 		    var delSigCheck = $('#delSigCheck').hasClass('checked');
@@ -97,6 +98,7 @@
 	    } else {
 		    ExpressCheckout.ChooseShippingProvider();
 	    }
+	    HideLoadingIndicator();
 	}
 //]]>
 </script>
