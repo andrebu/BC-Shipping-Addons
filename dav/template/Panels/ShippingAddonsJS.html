@@ -35,6 +35,17 @@
 .ShippingProviderList span.lightgray {
 	font-size: 12px;
 }
+#Cart-Loading {
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+    padding: 10px 20px;
+    position: fixed;
+    text-align: center;
+    z-index: 10000000000;
+    line-height: 32px;
+    left: 0;
+    right: 0;
+}
 </style>
 <script type="text/javascript">
 //<![CDATA[
@@ -71,7 +82,12 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
-		ShowLoadingIndicator();
+		var cartLoading = '<div id="Cart-Loading">' +
+								'<div class="ajax-loader">' +
+									'<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>&nbsp;&nbsp;Loading... Please wait...' +
+									'</div>' +
+							'</div>';
+		//$('.page > .header > .inner').prepend(cartLoading);
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 		    var addInsCheck = $('#addInsCheck').hasClass('checked');
 		    var delSigCheck = $('#delSigCheck').hasClass('checked');
@@ -82,7 +98,10 @@
 				$.post(addDelSigUrl).then(function(data1) {
 					return $.post(addInsUrl);
 				}).then(function(data2) {
-					return setTimeout(function () {ExpressCheckout.ChooseShippingProvider();}, 13);
+					return setTimeout(function () {
+						ExpressCheckout.ChooseShippingProvider();
+						//$('#Cart-Loading').hide();
+					}, 13);
 				});
 			} else if (!delSigCheck && !addInsCheck) {
 			    ExpressCheckout.ChooseShippingProvider();
@@ -98,7 +117,6 @@
 	    } else {
 		    ExpressCheckout.ChooseShippingProvider();
 	    }
-	    HideLoadingIndicator();
 	}
 //]]>
 </script>
