@@ -92,6 +92,7 @@
 				var insItemNameField = CartContents.find('.CartContents tbody > tr > .ProductName:contains(Shipping Insurance)');
 				var insInCartCost = parseInt(insItemNameField.parents('tr').find('.ProductPrice').text().replace('$',''));
 			    if (!addInsInCart) {
+				    $('.insurance-total').css('display', 'inline');
 	    			$('.shipping-addons .ins-cost').removeClass('disabled');
 				    chooseShipperForm.attr('onsubmit', newFormSub);
 			    } else {
