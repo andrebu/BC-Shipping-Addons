@@ -51,26 +51,32 @@
 //<![CDATA[
 	function enableShippingAddons() {
 		if ($('.shipping-addons').attr('data-disabled') == 'true') {
-			$('.shipping-addons').removeClass('disabled').attr('data-disabled', 'false');
-		    var insDesc = $('.ins-text'),
-		    	clickCalc = $('.ins-add-calc'),
-		    	newInsText = ' -- Insure your order <span style="display:none;">of <span id="purch-total"></span></span> for only $<span id="ins-total"><i class="green fa fa-spinner fa-pulse fa-fw"></i></span>',
-		    	insTotal,
-				insId,
-			    chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'), 
-			    newFormSub = 'newChooseShippingProvider(); return false;';
-		    chooseShipperForm.attr('onsubmit', newFormSub);
-			insDesc.html(newInsText);
-		    $('#purch-total').load('/cart.php .CartContents', function(data){
-				console.log($(this));
-				console.log($('.CartContents'));
-				//console.log(data);
-			    var CartContents = $('.CartContents');
-			    if (!$(this)) {
-				    //disable insurance selector and add msg
-			    } else { 
-					$('#purch-total').html(CartContents.find('tfoot > tr.gtotal .ProductPrice').text());
-					///var shippingInCart = 
+			$('.shipping-addons').attr('data-disabled', 'false');
+		    $('<div />').load('/cart.php .CartContents', function(data){
+			    var CartContents = $(data);
+				$('#purch-total').html(CartContents.find('.CartContents tfoot > tr.gtotal .ProductPrice').text());
+				//$('#purch-total').html($(this).text());
+				console.log($(CartContents));
+			    //$('.CartContents tbody > tr > .ProductName:contains(Shipping Insurance)').length
+			    var delSigInCart = CartContents.find('tbody > tr > .ProductName:contains(Delivery Signature Required)').length;
+			    var addInsInCart = CartContents.find('tbody > tr > .ProductName:contains(Shipping Insurance)').length;
+				    console.log(delSigInCart);
+				    console.log(addInsInCart);
+				var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'),
+					newFormSub = 'newChooseShippingProvider(); return false;';
+			    if (!delSigInCart) {
+	    			$('.shipping-addons .del-sig').removeClass('disabled');
+					chooseShipperForm.attr('onsubmit', newFormSub);
+			    } else {
+				    console.log('Already in cart!');
+			    }
+			    if (!addInsInCart) {
+	    			$('.shipping-addons .ins-cost').removeClass('disabled');
+				    var insDesc = $('.ins-text'),
+				    	clickCalc = $('.ins-add-calc'),
+				    	insTotal,
+						insId;
+				    chooseShipperForm.attr('onsubmit', newFormSub);
 					var insIdArr = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290'];
 					insIdArr.push('1291','1292','1293','1294','1295','1296','1297','1298','1299','1300');
 					var orderTotal = parseFloat($('#purch-total').text().replace('$','')),
@@ -80,6 +86,8 @@
 						insTotalText = $('#ins-total');
 					$('#addInsCheck').attr('data-ins-id', insId);
 					insTotalText.html(insCost);
+			    } else {
+				    console.log('Already in cart!');
 			    }
 			});
 		}
@@ -99,11 +107,13 @@
 							'</div>';
 		//$('.page > .header > .inner').prepend(cartLoading);
 	    if ($('.ShippingProviderList .radio span').hasClass('checked')) {
-		    var addInsCheck = $('#addInsCheck').hasClass('checked');
 		    var delSigCheck = $('#delSigCheck').hasClass('checked');
+		    var addInsCheck = $('#addInsCheck').hasClass('checked');
 		    var insId = $('#addInsCheck').attr('data-ins-id');
 		    var addDelSigUrl = 'https://dankstop.com/cart.php?action=add&product_id=1280';
 		    var addInsUrl = 'https://dankstop.com/cart.php?action=add&product_id=' + insId;
+		    console.log(delSigCheck);
+		    console.log(addInsCheck);
 			if (delSigCheck && addInsCheck) {
 				$.post(addDelSigUrl).then(function(data1) {
 					return $.post(addInsUrl);
