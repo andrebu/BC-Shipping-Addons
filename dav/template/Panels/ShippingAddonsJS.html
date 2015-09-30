@@ -1,11 +1,4 @@
 <style>
-.disabled {
-	pointer-events: none;
-	color: gray !important;
-}
-.disabled .green {
-	color: gray !important;
-}
 .best-value {
 	margin: 0;
 	padding: 5px 0;
@@ -35,6 +28,13 @@
 .ShippingProviderList span.lightgray {
 	font-size: 12px;
 }
+.disabled {
+	pointer-events: none;
+	color: gray !important;
+}
+.disabled .green {
+	color: gray !important;
+}
 .shipping-addons .disabled .fa.green {
 	margin: 3px 7px 0;
 	color: #39b54a !important;
@@ -59,20 +59,15 @@
 		    $('<div />').load('/cart.php .CartContents', function(data){
 			    var CartContents = $(data);
 				$('#purch-total').html(CartContents.find('.CartContents tfoot > tr.gtotal .ProductPrice').text());
-				//$('#purch-total').html($(this).text());
-				console.log($(CartContents));
-			    //$('.CartContents tbody > tr > .ProductName:contains(Shipping Insurance)').length
 			    var delSigInCart = CartContents.find('tbody > tr > .ProductName:contains(Delivery Signature Required)').length;
 			    var addInsInCart = CartContents.find('tbody > tr > .ProductName:contains(Shipping Insurance)').length;
-				    console.log(delSigInCart);
-				    console.log(addInsInCart);
 				var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'),
 					newFormSub = 'newChooseShippingProvider(); return false;';
 			    if (!delSigInCart) {
 	    			$('.shipping-addons .del-sig').removeClass('disabled');
 					chooseShipperForm.attr('onsubmit', newFormSub);
 			    } else {
-				    console.log('Already in cart!');
+				    $('.del-sig .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
 				    $('.del-sig-text').html(' -- Delivery Signature is already in your cart!');
 			    }
 			    if (!addInsInCart) {
@@ -92,7 +87,7 @@
 					$('#addInsCheck').attr('data-ins-id', insId);
 					insTotalText.html(insCost);
 			    } else {
-				    console.log('Already in cart!');
+				    $('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
 				    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
 			    }
 			});
