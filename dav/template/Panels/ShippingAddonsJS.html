@@ -35,6 +35,10 @@
 .ShippingProviderList span.lightgray {
 	font-size: 12px;
 }
+.shipping-addons .disabled .fa.green {
+	margin: 3px 7px 0;
+	color: #39b54a !important;
+}
 #Cart-Loading {
     background-color: rgba(0, 0, 0, .5);
     color: #fff;
@@ -69,6 +73,7 @@
 					chooseShipperForm.attr('onsubmit', newFormSub);
 			    } else {
 				    console.log('Already in cart!');
+				    $('.del-sig-text').html(' -- Delivery Signature is already in your cart!');
 			    }
 			    if (!addInsInCart) {
 	    			$('.shipping-addons .ins-cost').removeClass('disabled');
@@ -88,6 +93,7 @@
 					insTotalText.html(insCost);
 			    } else {
 				    console.log('Already in cart!');
+				    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
 			    }
 			});
 		}
