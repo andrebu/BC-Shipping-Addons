@@ -59,6 +59,7 @@
 		    $('<div />').load('/cart.php .CartContents', function(data){
 			    var CartContents = $(data);
 				$('#purch-total').html(CartContents.find('.CartContents tfoot > tr.gtotal .ProductPrice').text());
+				console.log($('#purch-total').text());
 			    var delSigInCart = CartContents.find('tbody > tr > .ProductName:contains(Delivery Signature Required)').length;
 			    var addInsInCart = CartContents.find('tbody > tr > .ProductName:contains(Shipping Insurance)').length;
 				var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'),
@@ -70,23 +71,32 @@
 				    $('.del-sig .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
 				    $('.del-sig-text').html(' -- Delivery Signature is already in your cart!');
 			    }
+
+				//Check if insurance is in cart, and if yes, see if it matches, and if no, re-calculate, else proceed
+			    var insDesc = $('.ins-text'),
+			    	clickCalc = $('.ins-add-calc'),
+			    	insTotal,
+					insId;
+				var insIdArr = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290'];
+				insIdArr.push('1291','1292','1293','1294','1295','1296','1297','1298','1299','1300');
+				var orderTotal = parseFloat($('#purch-total').text().replace('$','')),
+					insIdSelector = Math.floor(orderTotal * 0.01),
+					insId = insIdArr[insIdSelector],
+					insCost = insIdSelector + 1,
+					insTotalText = $('#ins-total');
+				$('#addInsCheck').attr('data-ins-id', insId);
+				insTotalText.html(insCost);
+				var insItemNameField = CartContents.find('.CartContents tbody > tr > .ProductName:contains(Shipping Insurance)');
+				var insInCartCost = parseInt(insItemNameField.parents('tr').find('.ProductPrice').text().replace('$',''));
+console.log(insCost);
+console.log(insInCartCost);
 			    if (!addInsInCart) {
 	    			$('.shipping-addons .ins-cost').removeClass('disabled');
-				    var insDesc = $('.ins-text'),
-				    	clickCalc = $('.ins-add-calc'),
-				    	insTotal,
-						insId;
 				    chooseShipperForm.attr('onsubmit', newFormSub);
-					var insIdArr = ['1281','1282','1283','1284','1285','1286','1287','1288','1289','1290'];
-					insIdArr.push('1291','1292','1293','1294','1295','1296','1297','1298','1299','1300');
-					var orderTotal = parseFloat($('#purch-total').text().replace('$','')),
-						insIdSelector = Math.floor(orderTotal * 0.01),
-						insId = insIdArr[insIdSelector],
-						insCost = insIdSelector + 1,
-						insTotalText = $('#ins-total');
-					$('#addInsCheck').attr('data-ins-id', insId);
-					insTotalText.html(insCost);
 			    } else {
+				    if (insCost !== insInCartCost) {
+					    console.log('insurance does NOT match');
+				    }
 				    $('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
 				    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
 			    }
