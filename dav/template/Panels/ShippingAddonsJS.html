@@ -35,6 +35,10 @@
 .disabled .green {
 	color: gray !important;
 }
+.insurance-total,
+.purch-total-span {
+	display: none;
+}
 .shipping-addons .disabled .fa.green {
 	margin: 3px 7px 0;
 	color: #39b54a !important;
@@ -59,7 +63,6 @@
 		    $('<div />').load('/cart.php .CartContents', function(data){
 			    var CartContents = $(data);
 				$('#purch-total').html(CartContents.find('.CartContents tfoot > tr.gtotal .ProductPrice').text());
-				console.log($('#purch-total').text());
 			    var delSigInCart = CartContents.find('tbody > tr > .ProductName:contains(Delivery Signature Required)').length;
 			    var addInsInCart = CartContents.find('tbody > tr > .ProductName:contains(Shipping Insurance)').length;
 				var chooseShipperForm = $('#CheckoutStepShippingProvider .ExpressCheckoutContent form'),
@@ -88,17 +91,26 @@
 				insTotalText.html(insCost);
 				var insItemNameField = CartContents.find('.CartContents tbody > tr > .ProductName:contains(Shipping Insurance)');
 				var insInCartCost = parseInt(insItemNameField.parents('tr').find('.ProductPrice').text().replace('$',''));
-console.log(insCost);
-console.log(insInCartCost);
 			    if (!addInsInCart) {
 	    			$('.shipping-addons .ins-cost').removeClass('disabled');
 				    chooseShipperForm.attr('onsubmit', newFormSub);
 			    } else {
 				    if (insCost !== insInCartCost) {
-					    console.log('insurance does NOT match');
+						var insToRemoveID = insItemNameField.parents('tr').find('.CartRemoveLink').attr('onclick').split('Item(\'');
+						var insToRemoveID = insToRemoveID[1].split('\'\)\;');
+						var insToRemoveID = insToRemoveID[0];
+						$.post('https://dankstop.com/cart.php?action=remove&item=' + insToRemoveID).then( function (data) {
+							$.post('https://dankstop.com/cart.php?action=add&product_id=' + insId, function(data5) {
+								$('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
+								$('.ins-text').html(' -- Shipping Insurance is already in your cart!');
+							});
+						});
+					    $('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
+					    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
+				    } else {
+					    $('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
+					    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
 				    }
-				    $('.ins-cost .checker').replaceWith('<i class="green fa fa-check-circle"></i>');
-				    $('.ins-text').html(' -- Shipping Insurance is already in your cart!');
 			    }
 			});
 		}
