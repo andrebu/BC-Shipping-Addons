@@ -57,6 +57,7 @@
 .confirm-loader {
 	position: absolute;
 	background-color: #fff;
+	z-index: 1;
 	display: none;
 }
 .confirm-loader span {
@@ -70,6 +71,9 @@
 }
 .confirm-loader span i {
 	vertical-align: middle;
+}
+#CheckoutStepShippingProvider .ExpressCheckoutContent form {
+	position: relative;
 }
 </style>
 <script type="text/javascript">
@@ -155,7 +159,8 @@
 			var loadConfirm = '<div class="confirm-loader"><span><i class="fa fa-cog fa-spin fa-2x green"></i>';
 				loadConfirm += '' + loadText+'</span></div>';
 				loadConfirm = $(loadConfirm);
-			loadConfirm.css({top: fullFormPos.top, left: fullFormPos.left, width: fullFormWidth, height: fullFormHeight});
+				//fullFormPos.top fullFormPos.left 
+			loadConfirm.css({top: '0', left: '0', width: fullFormWidth, height: fullFormHeight});
 			loadConfirm.appendTo(fullForm).fadeIn('slow');
 			if (delSigCheck && addInsCheck) {
 				$.post(addDelSigUrl).then(function(data1) {
