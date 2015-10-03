@@ -175,11 +175,16 @@
 			    ExpressCheckout.ChooseShippingProvider();
 			} else if (delSigCheck && !addInsCheck) {
 				$.post(addDelSigUrl).then(function(data1) {
-					return ExpressCheckout.ChooseShippingProvider();
+					return  setTimeout(function () {
+						ExpressCheckout.ChooseShippingProvider();
+					}, 13);
 				});
 			} else if (!delSigCheck && addInsCheck) {
 				$.post(addInsUrl).then(function(data1) {
-					return ExpressCheckout.ChooseShippingProvider();
+					return  setTimeout(function () {
+						ExpressCheckout.ChooseShippingProvider();
+						//$('.confirm-loader').fadeOut();
+					}, 13);
 				});
 			}
 	    } else {
