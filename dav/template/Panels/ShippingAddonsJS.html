@@ -68,17 +68,6 @@
 .confirm-loader span i {
 	vertical-align: middle;
 }
-#Cart-Loading {
-    background-color: rgba(0, 0, 0, .5);
-    color: #fff;
-    padding: 10px 20px;
-    position: fixed;
-    text-align: center;
-    z-index: 10000000000;
-    line-height: 32px;
-    left: 0;
-    right: 0;
-}
 </style>
 <script type="text/javascript">
 //<![CDATA[
@@ -149,23 +138,14 @@
 	    $('#addInsCheck').toggleClass('checked');
 	}
 	function newChooseShippingProvider() {
-		var cartLoading = '<div id="Cart-Loading">' +
-								'<div class="ajax-loader">' +
-									'<i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>&nbsp;&nbsp;Loading... Please wait...' +
-									'</div>' +
-							'</div>';
-		//$('.page > .header > .inner').prepend(cartLoading);
 		if ($('.ShippingProviderList .radio span').hasClass('checked')) {
 			var delSigCheck = $('#delSigCheck').hasClass('checked');
 			var addInsCheck = $('#addInsCheck').hasClass('checked');
 			var insId = $('#addInsCheck').attr('data-ins-id');
 			var addDelSigUrl = 'https://dankstop.com/cart.php?action=add&product_id=1280';
 			var addInsUrl = 'https://dankstop.com/cart.php?action=add&product_id=' + insId;
-			console.log(delSigCheck);
-			console.log(addInsCheck);
 			var fullForm = $('#CheckoutStepShippingProvider form');
 			var fullFormPos = fullForm.position();
-			//var fullFormOff = fullForm.offset();
 			var fullFormHeight = fullForm.height();
 			var fullFormWidth = fullForm.width();
 			var loadText = ' Loading Order Confirmation...'
