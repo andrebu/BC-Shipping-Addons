@@ -168,7 +168,7 @@
 				}).then(function(data2) {
 					return setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
-					}, 13);
+					}, 137);
 				});
 			} else if (!delSigCheck && !addInsCheck) {
 			    ExpressCheckout.ChooseShippingProvider();
@@ -176,13 +176,13 @@
 				$.post(addDelSigUrl).then(function(data1) {
 					return  setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
-					}, 13);
+					}, 137);
 				});
 			} else if (!delSigCheck && addInsCheck) {
 				$.post(addInsUrl).then(function(data1) {
 					return  setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
-					}, 13);
+					}, 1370);
 				});
 			}
 	    } else {
