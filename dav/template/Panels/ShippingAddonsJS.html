@@ -160,6 +160,7 @@
 				}).then(function(data2) {
 					return setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
+						//$('.confirm-loader').fadeOut();
 					}, 13);
 				});
 			} else if (!delSigCheck && !addInsCheck) {
