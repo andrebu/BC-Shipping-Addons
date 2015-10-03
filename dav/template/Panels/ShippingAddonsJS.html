@@ -49,6 +49,7 @@
 .shipping-addons .disabled .fa.green {
 	margin: 3px 7px 0;
 	color: #39b54a !important;
+	vertical-align: top;
 }
 .shipping-addons .option-text {
 	display: inline-block;
@@ -151,15 +152,14 @@
 			var insId = $('#addInsCheck').attr('data-ins-id');
 			var addDelSigUrl = 'https://dankstop.com/cart.php?action=add&product_id=1280';
 			var addInsUrl = 'https://dankstop.com/cart.php?action=add&product_id=' + insId;
+			//Create and append loader
 			var fullForm = $('#CheckoutStepShippingProvider form');
-			var fullFormPos = fullForm.position();
 			var fullFormHeight = fullForm.height();
 			var fullFormWidth = fullForm.width();
 			var loadText = ' Loading Order Confirmation...'
 			var loadConfirm = '<div class="confirm-loader"><span><i class="fa fa-cog fa-spin fa-2x green"></i>';
 				loadConfirm += '' + loadText+'</span></div>';
 				loadConfirm = $(loadConfirm);
-				//fullFormPos.top fullFormPos.left 
 			loadConfirm.css({top: '0', left: '0', width: fullFormWidth, height: fullFormHeight});
 			loadConfirm.appendTo(fullForm).fadeIn('slow');
 			if (delSigCheck && addInsCheck) {
@@ -168,7 +168,6 @@
 				}).then(function(data2) {
 					return setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
-						//$('.confirm-loader').fadeOut();
 					}, 13);
 				});
 			} else if (!delSigCheck && !addInsCheck) {
@@ -183,7 +182,6 @@
 				$.post(addInsUrl).then(function(data1) {
 					return  setTimeout(function () {
 						ExpressCheckout.ChooseShippingProvider();
-						//$('.confirm-loader').fadeOut();
 					}, 13);
 				});
 			}
